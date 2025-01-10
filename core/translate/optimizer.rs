@@ -25,6 +25,9 @@ pub fn optimize_plan(plan: &mut Plan) -> Result<()> {
 fn optimize_select_plan(plan: &mut SelectPlan) -> Result<()> {
     optimize_subqueries(&mut plan.source)?;
     rewrite_exprs(&mut plan.source, &mut plan.where_clause)?;
+    for col in plan.result_columns.iter_mut() {
+        rewrite_expr(&mut col.expr)?;
+    }
     if let ConstantConditionEliminationResult::ImpossibleCondition =
         eliminate_constants(&mut plan.source, &mut plan.where_clause)?
     {

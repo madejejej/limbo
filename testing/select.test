@@ -11,6 +11,14 @@ do_execsql_test select-const-2 {
   SELECT 2
 } {2}
 
+do_execsql_test select-true {
+  SELECT true
+} {1}
+
+do_execsql_test select-false {
+  SELECT false
+} {0}
+
 do_execsql_test select-text-escape-1 {
   SELECT '''a'
 } {'a}
